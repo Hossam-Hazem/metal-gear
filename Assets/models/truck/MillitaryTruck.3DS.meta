@@ -1,37 +1,52 @@
 fileFormatVersion: 2
-guid: 19c549025ac70ad44bd90ffd272ee552
-timeCreated: 1481895687
+guid: b8c1aa5f531fd0f478b9bbbb285c907e
+timeCreated: 1481897650
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Layer:0
-    100002: Layer:00
-    100004: Layer:Lay0
-    100006: Layer:Lay1
-    100008: Layer:Laye
-    100010: //RootNode
-    400000: Layer:0
-    400002: Layer:00
-    400004: Layer:Lay0
-    400006: Layer:Lay1
-    400008: Layer:Laye
-    400010: //RootNode
-    2300000: Layer:0
-    2300002: Layer:00
-    2300004: Layer:Lay0
-    2300006: Layer:Lay1
-    2300008: Layer:Laye
-    3300000: Layer:0
-    3300002: Layer:00
-    3300004: Layer:Lay0
-    3300006: Layer:Lay1
-    3300008: Layer:Laye
-    4300000: Layer:0
-    4300002: Layer:00
-    4300004: Layer:Laye
-    4300006: Layer:Lay0
-    4300008: Layer:Lay1
+    100000: //RootNode
+    100002: Object01
+    100004: Object02
+    100006: Object03
+    100008: Object04
+    100010: Object05
+    100012: Object07
+    100014: Omni01
+    100016: Spot01
+    100018: Spot01.target
+    100020: Spot02
+    100022: Spot02.target
+    400000: //RootNode
+    400002: Object01
+    400004: Object02
+    400006: Object03
+    400008: Object04
+    400010: Object05
+    400012: Object07
+    400014: Omni01
+    400016: Spot01
+    400018: Spot01.target
+    400020: Spot02
+    400022: Spot02.target
+    2300000: Object01
+    2300002: Object02
+    2300004: Object03
+    2300006: Object04
+    2300008: Object05
+    2300010: Object07
+    3300000: Object01
+    3300002: Object02
+    3300004: Object03
+    3300006: Object04
+    3300008: Object05
+    3300010: Object07
+    4300000: Object01
+    4300002: Object02
+    4300004: Object03
+    4300006: Object04
+    4300008: Object05
+    4300010: Object07
   materials:
     importMaterials: 1
     materialName: 0
@@ -56,7 +71,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.001
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

@@ -12,6 +12,7 @@ public class DummyScript : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.X)) {
 			anim.SetBool ("Rifle", true);
+            anim.SetBool("Aim", true);
 		}
 	}
 }

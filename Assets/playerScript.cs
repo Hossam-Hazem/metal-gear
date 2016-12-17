@@ -38,9 +38,9 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("Fire", false);
+        //animator.SetBool("Fire", false);
 
-        if (Input.GetMouseButtonDown(0) && animator.GetBool("Aim"))
+        if (Input.GetMouseButton(0) && animator.GetBool("Aim"))
         {
             //attack
             OnAttackClicked();

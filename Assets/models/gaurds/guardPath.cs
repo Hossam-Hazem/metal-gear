@@ -13,7 +13,6 @@ public class guardPath : MonoBehaviour
 	public float agentSpeed;
 
     public static Transform destinationSnakeCurrentLocation;
-    bool hasReachedSnake = false;
 
     // Use this for initialization
     void Start()

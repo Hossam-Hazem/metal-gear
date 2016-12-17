@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class playerScript : MonoBehaviour
 {
@@ -19,13 +20,19 @@ public class playerScript : MonoBehaviour
 
     int health = 100;
 
+    ThirdPersonCharacter m_Character;
+    GameObject mainCamera;
 
     Animator animator;
     // Use this for initialization
     void Start()
     {
         animator = GetComponent<Animator>();
-        currentChosenItemFromInventory = "knock";
+        m_Character = GetComponent<ThirdPersonCharacter>();
+        mainCamera = GameObject.FindWithTag("mainCamera");
+
+
+        currentChosenItemFromInventory = "pistol";
     }
 
     // Update is called once per frame
@@ -38,13 +45,15 @@ public class playerScript : MonoBehaviour
             //attack
             OnAttackClicked();
         }
-        
-        if (Input.GetMouseButtonDown(1))
+
+        if (Input.GetMouseButton(1))
         {
             //aiming
             animator.SetBool("Aim", true);
+            transform.rotation = Quaternion.LookRotation(mainCamera.transform.forward);
         }
-        else {
+        else
+        {
             animator.SetBool("Aim", false);
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -141,7 +150,8 @@ public class playerScript : MonoBehaviour
             {
                 animator.SetBool("inBox", false);
             }
-            else {
+            else
+            {
                 animator.SetBool("inBox", true);
             }
         }
@@ -151,7 +161,8 @@ public class playerScript : MonoBehaviour
             //knock anim to draw enemy's attention
             GameObject currentLocation = new GameObject();
             currentLocation.transform.position = transform.position;
-            if (guardPath.destinationSnakeCurrentLocation != null) {
+            if (guardPath.destinationSnakeCurrentLocation != null)
+            {
                 Destroy(guardPath.destinationSnakeCurrentLocation.gameObject);
             }
             guardPath.destinationSnakeCurrentLocation = currentLocation.transform;

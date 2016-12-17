@@ -8,7 +8,7 @@ public class playerScript : MonoBehaviour
     // inventory items : heal, box, key
     // inventory weapons : knock, hands, pistol
 
-    string currentChosenItemFromInventory;
+    string currentChosenItemFromInventory = "";
 
     int healItems = 0;
     bool box = false;
@@ -20,19 +20,30 @@ public class playerScript : MonoBehaviour
 
     int health = 100;
 
+
+    Animator animator;
     // Use this for initialization
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && animator.GetBool("Aim"))
         {
             //attack
             OnAttackClicked();
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            //aiming
+            animator.SetBool("Aim", true);
+        }
+        else {
+            animator.SetBool("Aim", false);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -106,14 +117,16 @@ public class playerScript : MonoBehaviour
         {
             //do nothing
         }
+            /*
         else if (currentChosenItemFromInventory.Equals("hands"))
         {
             //toggle fist fight anim
         }
+            */
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {
             pistolAmmo--;
-            //show box hide character / hide box show character
+            
         }
     }
 

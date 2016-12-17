@@ -1,22 +1,42 @@
 fileFormatVersion: 2
-guid: 1fde7ba25bc0e674bb3136604358c0a3
-timeCreated: 1481929209
+guid: c8a9614b037210442bc97b75b13a1d91
+timeCreated: 1482005658
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: AK_47_2
-    100004: Round_2
+    100002: WoodenBox_WoodenBox_WoodenBox1
+    100004: WoodenBox_WoodenBox_WoodenBox2
+    100006: WoodenBox_WoodenBox_WoodenBox3
+    100008: WoodenBox_WoodenBox_WoodenBox4
+    100010: WoodenBox_WoodenBox_WoodenBox5
+    100012: WoodenBox_WoodenBox_WoodenBox6
     400000: //RootNode
-    400002: AK_47_2
-    400004: Round_2
-    2300000: AK_47_2
-    2300002: Round_2
-    3300000: AK_47_2
-    3300002: Round_2
-    4300000: AK_47_2
-    4300002: Round_2
+    400002: WoodenBox_WoodenBox_WoodenBox1
+    400004: WoodenBox_WoodenBox_WoodenBox2
+    400006: WoodenBox_WoodenBox_WoodenBox3
+    400008: WoodenBox_WoodenBox_WoodenBox4
+    400010: WoodenBox_WoodenBox_WoodenBox5
+    400012: WoodenBox_WoodenBox_WoodenBox6
+    2300000: WoodenBox_WoodenBox_WoodenBox1
+    2300002: WoodenBox_WoodenBox_WoodenBox2
+    2300004: WoodenBox_WoodenBox_WoodenBox3
+    2300006: WoodenBox_WoodenBox_WoodenBox4
+    2300008: WoodenBox_WoodenBox_WoodenBox5
+    2300010: WoodenBox_WoodenBox_WoodenBox6
+    3300000: WoodenBox_WoodenBox_WoodenBox1
+    3300002: WoodenBox_WoodenBox_WoodenBox2
+    3300004: WoodenBox_WoodenBox_WoodenBox3
+    3300006: WoodenBox_WoodenBox_WoodenBox4
+    3300008: WoodenBox_WoodenBox_WoodenBox5
+    3300010: WoodenBox_WoodenBox_WoodenBox6
+    4300000: WoodenBox_WoodenBox_WoodenBox1
+    4300002: WoodenBox_WoodenBox_WoodenBox2
+    4300004: WoodenBox_WoodenBox_WoodenBox3
+    4300006: WoodenBox_WoodenBox_WoodenBox4
+    4300008: WoodenBox_WoodenBox_WoodenBox5
+    4300010: WoodenBox_WoodenBox_WoodenBox6
   materials:
     importMaterials: 1
     materialName: 0
@@ -41,7 +61,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

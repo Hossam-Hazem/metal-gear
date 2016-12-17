@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 1fde7ba25bc0e674bb3136604358c0a3
-timeCreated: 1481929209
+guid: dd5be00634fbc1c4c96c43db99e72b3b
+timeCreated: 1482007005
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: AK_47_2
-    100004: Round_2
-    400000: //RootNode
-    400002: AK_47_2
-    400004: Round_2
-    2300000: AK_47_2
-    2300002: Round_2
-    3300000: AK_47_2
-    3300002: Round_2
-    4300000: AK_47_2
-    4300002: Round_2
+  fileIDToRecycleName: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -41,7 +29,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -75,7 +63,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

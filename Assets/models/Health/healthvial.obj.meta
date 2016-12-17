@@ -1,22 +1,17 @@
 fileFormatVersion: 2
-guid: 1fde7ba25bc0e674bb3136604358c0a3
-timeCreated: 1481929209
+guid: 07685f9c861023d45b358b956fd8bd13
+timeCreated: 1482007005
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: AK_47_2
-    100004: Round_2
-    400000: //RootNode
-    400002: AK_47_2
-    400004: Round_2
-    2300000: AK_47_2
-    2300002: Round_2
-    3300000: AK_47_2
-    3300002: Round_2
-    4300000: AK_47_2
-    4300002: Round_2
+    100000: (null)
+    100002: //RootNode
+    400000: (null)
+    400002: //RootNode
+    2300000: (null)
+    3300000: (null)
+    4300000: (null)
   materials:
     importMaterials: 1
     materialName: 0

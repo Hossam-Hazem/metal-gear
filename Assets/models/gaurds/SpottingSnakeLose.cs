@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpottingSnakeLoose : MonoBehaviour {
+public class SpottingSnakeLose : MonoBehaviour {
 
     void Update()
     {

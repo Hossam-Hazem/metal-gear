@@ -6,7 +6,7 @@ public class playerScript : MonoBehaviour
 {
 
     // inventory items : heal, box, key
-    // inventory weapons : knock, hands, pistol
+    // inventory weapons : knock, pistol
 
     string currentChosenItemFromInventory = "";
 
@@ -15,7 +15,6 @@ public class playerScript : MonoBehaviour
     bool key = false;
 
     bool knock = true;
-    bool hands = true;
     int pistolAmmo = 0;
 
     int health = 100;
@@ -31,6 +30,8 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool("Fire", false);
+
         if (Input.GetMouseButtonDown(0) && animator.GetBool("Aim"))
         {
             //attack
@@ -81,7 +82,7 @@ public class playerScript : MonoBehaviour
             //go to another scene
         }
 
-        if (collider.CompareTag("heal"))
+        if (collider.CompareTag("health"))
         {
             healItems++;
         }
@@ -91,12 +92,12 @@ public class playerScript : MonoBehaviour
             box = true;
         }
 
-        if (collider.CompareTag("key"))
+        if (collider.CompareTag("doorCard"))
         {
             key = true;
         }
 
-        if (collider.CompareTag("pistol"))
+        if (collider.CompareTag("ammo"))
         {
             pistolAmmo += 30;
         }
@@ -104,7 +105,7 @@ public class playerScript : MonoBehaviour
 
     void OnAttackClicked()
     {
-        if (currentChosenItemFromInventory.Equals("heal"))
+        if (currentChosenItemFromInventory.Equals("health"))
         {
             //do nothing
         }
@@ -117,39 +118,37 @@ public class playerScript : MonoBehaviour
         {
             //do nothing
         }
-            /*
-        else if (currentChosenItemFromInventory.Equals("hands"))
-        {
-            //toggle fist fight anim
-        }
-            */
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {
             pistolAmmo--;
-            
+            animator.SetBool("Fire", true);
         }
     }
 
     void OnAltClick()
     {
 
-        if (currentChosenItemFromInventory.Equals("heal"))
+        if (currentChosenItemFromInventory.Equals("health"))
         {
             health = 100;
             healItems--;
         }
-        else if (currentChosenItemFromInventory.Equals("box"))
+        else if (currentChosenItemFromInventory.Equals("box") && box)
         {
             //show box hide character / hide box show character
+            if (animator.GetBool("inBox"))
+            {
+                animator.SetBool("inBox", false);
+            }
+            else {
+                animator.SetBool("inBox", true);
+            }
         }
 
         else if (currentChosenItemFromInventory.Equals("knock"))
         {
             //knock anim to draw enemy's attention
-        }
-        else if (currentChosenItemFromInventory.Equals("hands"))
-        {
-            //toggle fist fight anim
+
         }
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {

@@ -25,6 +25,7 @@ public class playerScript : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        currentChosenItemFromInventory = "knock";
     }
 
     // Update is called once per frame
@@ -148,11 +149,24 @@ public class playerScript : MonoBehaviour
         else if (currentChosenItemFromInventory.Equals("knock"))
         {
             //knock anim to draw enemy's attention
-
+            GameObject currentLocation = new GameObject();
+            currentLocation.transform.position = transform.position;
+            if (guardPath.destinationSnakeCurrentLocation != null) {
+                Destroy(guardPath.destinationSnakeCurrentLocation.gameObject);
+            }
+            guardPath.destinationSnakeCurrentLocation = currentLocation.transform;
         }
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {
             //toggle pistol anim
+            if (animator.GetBool("Pistol"))
+            {
+                animator.SetBool("Pistol", false);
+            }
+            else
+            {
+                animator.SetBool("Pistol", true);
+            }
         }
     }
 }

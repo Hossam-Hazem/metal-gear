@@ -27,6 +27,7 @@ public class guardPath : MonoBehaviour
             agent.SetDestination(destinationSnakeCurrentLocation.position);
             if (destinationSnakeCurrentLocation.position.x == this.transform.position.x && destinationSnakeCurrentLocation.position.z == this.transform.position.z)
             {
+                Destroy(destinationSnakeCurrentLocation.gameObject);
                 destinationSnakeCurrentLocation = null;
             }
         }

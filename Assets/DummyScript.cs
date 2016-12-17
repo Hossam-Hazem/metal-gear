@@ -11,7 +11,7 @@ public class DummyScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.X)) {
-			anim.SetBool ("Rifle", true);
+			anim.SetBool ("Pistol", true);
             anim.SetBool("Aim", true);
 		}
 	}

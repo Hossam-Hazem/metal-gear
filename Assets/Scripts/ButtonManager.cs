@@ -26,10 +26,12 @@ public class ButtonManager : MonoBehaviour
 
     private bool l1Moving = false;
     private bool l2Moving = false;
-    float l1Speed = 11.2f;
+    float l1Speed = 0f;
     float l1FadeSpeed = 0f;
-    float l2Speed = 11.2f;
+    float l2Speed = 0f;
     float l2FadeSpeed = 0f;
+    float startLocation = 0f;
+    float endLocation = 0f;
 
     public void Start()
     {
@@ -38,6 +40,7 @@ public class ButtonManager : MonoBehaviour
 
         Debug.Log(LevelOne.transform.position[0]);
         Debug.Log("Button Started At: " + startButton.transform.position[0]);
+        startLocation = startButton.transform.position[0];
         LevelOne.SetActive(false);
         LevelTwo.SetActive(false);
     }
@@ -45,7 +48,7 @@ public class ButtonManager : MonoBehaviour
     {
         if (startMoving)
         {
-            speed += 0.2f;
+            speed += 0.4f;
             FadeSpeed += 0.02f;
             startButton.transform.Translate(1 * speed, 0f, 0);
             ColorBlock cb = startButton.GetComponent<Button>().colors;
@@ -60,11 +63,18 @@ public class ButtonManager : MonoBehaviour
             {
                 startMoving = false;
                 Debug.Log("Button ended at" + startButton.transform.position[0]);
+                l1Speed = speed;
+                l2Speed = speed;
+                Debug.Log("Speed: " + speed);
+                endLocation = startButton.transform.position[0];
+                LevelOne.transform.Translate(startLocation - endLocation,0,0);
+                LevelTwo.transform.Translate(startLocation - endLocation, 0, 0);
+
             }
         }
         if (optionsMoving)
         {
-            OptionsSpeed += 0.2f;
+            OptionsSpeed += 0.4f;
             OptionsFadeSpeed += 0.02f;
             optionsButton.transform.Translate(1 * OptionsSpeed, 0f, 0);
             ColorBlock cb = optionsButton.GetComponent<Button>().colors;
@@ -83,7 +93,7 @@ public class ButtonManager : MonoBehaviour
      
         if (exitMoving)
         {
-            exitSpeed += 0.2f;
+            exitSpeed += 0.4f;
             exitFadeSpeed += 0.02f;
             exitGameButton.transform.Translate(1 * exitSpeed, 0f, 0);
             ColorBlock cb = exitGameButton.GetComponent<Button>().colors;
@@ -99,8 +109,8 @@ public class ButtonManager : MonoBehaviour
 
         if (l1Moving)
         {
-            l1Speed -= 0.2f;
-            Debug.Log(l1Speed);
+            l1Speed -= 0.4f;
+            //Debug.Log(l1Speed);
             l1FadeSpeed += 0.02f;
             LevelOne.transform.Translate(1 * l1Speed, 0f, 0);
             ColorBlock cb = LevelOne.GetComponent<Button>().colors;
@@ -108,10 +118,10 @@ public class ButtonManager : MonoBehaviour
             LevelOne.GetComponent<Button>().colors = cb;
             LevelOne.GetComponentInChildren<Text>().color = new Color(1, 1, 1, l1FadeSpeed);
             LevelOne.SetActive(true);
-            Debug.Log(LevelOne.transform.position[0]);
+           // Debug.Log(LevelOne.transform.position[0]);
             if (l1FadeSpeed >= 0.25)
                 l2Moving = true;
-            if (LevelOne.transform.position[0] > 225)
+            if (LevelOne.transform.position[0] > startLocation || l1FadeSpeed >= 1)
             {
                 l1Moving = false;
             }
@@ -120,7 +130,7 @@ public class ButtonManager : MonoBehaviour
 
         if (l2Moving)
         {
-            l2Speed -= 0.2f;
+            l2Speed -= 0.4f;
             l2FadeSpeed += 0.02f;
             LevelTwo.transform.Translate(1 * l2Speed, 0f, 0);
             ColorBlock cb = LevelOne.GetComponent<Button>().colors;
@@ -129,7 +139,7 @@ public class ButtonManager : MonoBehaviour
             LevelTwo.GetComponentInChildren<Text>().color = new Color(1, 1, 1, l2FadeSpeed);
             LevelTwo.SetActive(true);
 
-            if (LevelTwo.transform.position[0] > 224)
+            if (LevelTwo.transform.position[0] > startLocation || l2FadeSpeed > 1)
             {
                 l2Moving = false;
             }
@@ -169,5 +179,15 @@ public class ButtonManager : MonoBehaviour
     public void closePausePanel(string btn)
     {
         pausePanel.SetActive(false);
+    }
+
+    public void loadLevel1()
+    {
+        SceneManager.LoadScene("LevelOne");
+    }
+
+    public void loadLevel2()
+    {
+        SceneManager.LoadScene("LevelTwo");
     }
 }

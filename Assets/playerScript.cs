@@ -21,15 +21,27 @@ public class playerScript : MonoBehaviour
     int health = 100;
 
     ThirdPersonCharacter m_Character;
-    GameObject mainCamera;
+    GameObject aimDot;
 
+    GameObject parentMainCamera;
+    GameObject mainCamera;
+    GameObject MainCameraPivot;
     Animator animator;
+
+    public GameObject bullet;
+    public GameObject aimTarget;
+    GameObject aimTargetClone;
+
     // Use this for initialization
     void Start()
     {
         animator = GetComponent<Animator>();
         m_Character = GetComponent<ThirdPersonCharacter>();
-        mainCamera = GameObject.FindWithTag("mainCamera");
+        aimDot = GameObject.FindWithTag("aimDot");
+
+        parentMainCamera = GameObject.FindWithTag("mainCamera");
+        mainCamera = GameObject.FindWithTag("MainCamera");
+        MainCameraPivot = GameObject.FindWithTag("MainCameraPivot");
 
 
         currentChosenItemFromInventory = "pistol";
@@ -45,16 +57,36 @@ public class playerScript : MonoBehaviour
             //attack
             OnAttackClicked();
         }
+        /*
+        if (Input.GetMouseButtonUp(1) && animator.GetBool("Aim"))
+        {
+            transform.rotation = Quaternion.LookRotation(parentMainCamera.transform.forward);
+            MainCameraPivot.transform.position.Set(MainCameraPivot.transform.position.x, MainCameraPivot.transform.position.y, 0.0f);
+        }*/
 
-        if (Input.GetMouseButton(1))
+        Destroy(aimTargetClone);
+        if (Input.GetMouseButton(1) && animator.GetBool("Pistol"))
         {
             //aiming
             animator.SetBool("Aim", true);
-            transform.rotation = Quaternion.LookRotation(mainCamera.transform.forward);
+            transform.rotation = Quaternion.LookRotation(parentMainCamera.transform.forward);
+
+            Ray ray = new Ray();
+            RaycastHit raycastHit;
+            ray.origin = bullet.transform.position;
+            ray.direction = mainCamera.transform.forward;
+            if (Physics.SphereCast(ray, 0.009f, out raycastHit, Mathf.Infinity) && !raycastHit.transform.CompareTag("bullet"))
+            {
+                aimTargetClone = (GameObject)Instantiate(aimTarget, raycastHit.point, aimTarget.transform.rotation);
+            }
+
+            //MainCameraPivot.transform.position.Set(MainCameraPivot.transform.position.x, MainCameraPivot.transform.position.y, -0.6f);
+            //aimDot.SetActive(true);
         }
         else
         {
             animator.SetBool("Aim", false);
+            //aimDot.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -132,6 +164,27 @@ public class playerScript : MonoBehaviour
         {
             pistolAmmo--;
             animator.SetBool("Fire", true);
+
+            /*
+            Ray ray = new Ray();
+            RaycastHit raycastHit;
+            ray.origin = transform.position;
+            ray.direction = mainCamera.transform.forward;
+            if (Physics.SphereCast(ray, 0.1f, out raycastHit, 5, 1 << 9))
+            {
+                SpottingSnakeLose spottingSnakeLoseEnemy = raycastHit.transform.gameObject.GetComponent<SpottingSnakeLose>();
+                spottingSnakeLoseEnemy.health -= 20;
+            }*/
+
+
+            GameObject bulletClone = (GameObject)Instantiate(bullet, bullet.transform.position, bullet.transform.rotation);
+            bulletClone.transform.localScale *= 300;
+            Rigidbody bulletCloneRigid = bulletClone.GetComponent<Rigidbody>();
+            bulletCloneRigid.isKinematic = false;
+            bulletCloneRigid.velocity = mainCamera.transform.forward * 50f;
+            bulletClone.SetActive(true);
+
+            Destroy(bulletClone, 2.0f);
         }
     }
 

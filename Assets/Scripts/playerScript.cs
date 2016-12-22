@@ -140,21 +140,25 @@ public class playerScript : MonoBehaviour
         if (collider.CompareTag("health"))
         {
             healItems++;
+            collider.gameObject.SetActive(false);
         }
 
         if (collider.CompareTag("box"))
         {
             box = true;
+            collider.gameObject.SetActive(false);
         }
 
         if (collider.CompareTag("doorCard"))
         {
             key = true;
+            collider.gameObject.SetActive(false);
         }
 
         if (collider.CompareTag("ammo"))
         {
             pistolAmmo += 30;
+            collider.gameObject.SetActive(false);
         }
     }
 

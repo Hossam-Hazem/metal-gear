@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -10,19 +11,26 @@ public class playerScript : MonoBehaviour
     // inventory items : heal, box, key
     // inventory weapons : knock, pistol
 
+    
     bool isDead = false;
     public static bool isInBox = false;
 
     string currentChosenItemFromInventory = "";
 
     int healItems = 0;
-    bool box = true;
+    bool box = false;
     bool key = false;
 
     bool knock = true;
     int pistolAmmo = 20;
 
     int health = 100;
+
+    AudioSource gunShot;
+    AudioSource ssHurt;
+    AudioSource ssDeath;
+    AudioSource footSteps;
+    AudioSource doorOpening;
 
     ThirdPersonUserControl thirdPersonUserControl;
     ThirdPersonCharacter m_Character;
@@ -45,11 +53,22 @@ public class playerScript : MonoBehaviour
     public GameObject bullet;
     public GameObject aimTarget;
     GameObject aimTargetClone;
+
     float lastBulletWaitTime = 0f;
+
+    float lastStepTime = 0f;
 
     // Use this for initialization
     void Start()
     {
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        gunShot = audioSources[0];
+        ssHurt = audioSources[1];
+        ssDeath = audioSources[2];
+        footSteps = audioSources[3];
+        doorOpening = audioSources[4];
+
         thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
         animator = GetComponent<Animator>();
         m_Character = GetComponent<ThirdPersonCharacter>();
@@ -60,24 +79,29 @@ public class playerScript : MonoBehaviour
         MainCameraPivot = GameObject.FindWithTag("MainCameraPivot");
 
         // inventory items : heal, box, key
-    // inventory weapons : knock, pistol
-        healB.onClick.AddListener(() => { 
+        // inventory weapons : knock, pistol
+        healB.onClick.AddListener(() =>
+        {
             chooseItem("health");
             inventoryCanvas.SetActive(false);
         });
-        boxB.onClick.AddListener(() => { 
+        boxB.onClick.AddListener(() =>
+        {
             chooseItem("box");
             inventoryCanvas.SetActive(false);
         });
-        keyB.onClick.AddListener(() => { 
+        keyB.onClick.AddListener(() =>
+        {
             chooseItem("key");
             inventoryCanvas.SetActive(false);
         });
-        knockB.onClick.AddListener(() => { 
+        knockB.onClick.AddListener(() =>
+        {
             chooseItem("knock");
             inventoryCanvas.SetActive(false);
         });
-        pistolB.onClick.AddListener(() => { 
+        pistolB.onClick.AddListener(() =>
+        {
             chooseItem("pistol");
             inventoryCanvas.SetActive(false);
         });
@@ -123,14 +147,15 @@ public class playerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!inventoryCanvas.activeSelf) {
+            if (!inventoryCanvas.activeSelf)
+            {
                 //open the item menu
                 inventoryCanvas.SetActive(true);
             }
             else
             {
                 inventoryCanvas.SetActive(false);
-            }   
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -145,11 +170,20 @@ public class playerScript : MonoBehaviour
             OnAltClick();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
-        {
-            //pause the game
-        }
+        
 
+        if (Time.time - lastStepTime > 0.35)
+        {
+            lastStepTime = Time.time;
+            if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) && !animator.GetBool("Crouch"))
+            {
+                footSteps.Play();
+            }
+            else
+            {
+                footSteps.Stop();
+            }
+        }
     }
 
     void chooseItem(string item)
@@ -162,17 +196,22 @@ public class playerScript : MonoBehaviour
         if (collider.CompareTag("enemyBullet"))
         {
             health -= 20;
+            ssHurt.Play();
             if (health <= 0 && !isDead)
             {
                 isDead = true;
                 animator.SetBool("Ded", true);
                 thirdPersonUserControl.enabled = false;
+                ssDeath.Play();
+                SceneManager.LoadScene("Credits");
             }
         }
 
-        if (collider.CompareTag("door"))
+        if (collider.CompareTag("door") && key)
         {
             //go to another scene
+            doorOpening.Play();
+            SceneManager.LoadScene("LevelTwo");
         }
 
         if (collider.CompareTag("health"))
@@ -222,6 +261,7 @@ public class playerScript : MonoBehaviour
 
                 pistolAmmo--;
                 animator.SetBool("Fire", true);
+                gunShot.Play();
 
                 GameObject bulletClone = (GameObject)Instantiate(bullet, bullet.transform.position, bullet.transform.rotation);
                 bulletClone.transform.localScale *= 300;
@@ -274,6 +314,7 @@ public class playerScript : MonoBehaviour
             guardPath.destinationSnakeCurrentLocation = currentLocation.transform;
 
             animator.SetBool("knock", true);
+            footSteps.Play();
         }
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {

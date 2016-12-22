@@ -146,6 +146,11 @@ public class ButtonManager : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            //pause the game
+            pausePanel.SetActive(true);
+        }
     }
 
    

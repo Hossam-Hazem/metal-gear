@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpottingSnakeAttack : MonoBehaviour
 {
-
+    public bool isBoss = false;
     bool isDead = false;
     public GameObject bullet;
     float lastBulletWaitTime = 0f;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SpottingSnakeLose : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class SpottingSnakeLose : MonoBehaviour
         if (health > 0 && snakeSeen())
         {
             //show loosing menu
+            SceneManager.LoadScene("Credits");
         }
     }
 

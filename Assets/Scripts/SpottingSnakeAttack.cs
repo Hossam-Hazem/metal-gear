@@ -8,6 +8,7 @@ public class SpottingSnakeAttack : MonoBehaviour
     public GameObject bullet;
     float lastBulletWaitTime = 0f;
     public GameObject snake;
+    public GameObject target;
     int health = 50;
 
     Animator animator;
@@ -44,8 +45,8 @@ public class SpottingSnakeAttack : MonoBehaviour
                     GameObject bulletClone = (GameObject)Instantiate(bullet, bullet.transform.position, bullet.transform.rotation);
                     Rigidbody bulletCloneRigid = bulletClone.GetComponent<Rigidbody>();
                     bulletCloneRigid.isKinematic = false;
-                    Vector3 dir = (snake.transform.position - this.transform.position).normalized;
-                    bulletCloneRigid.velocity = dir * 200f;
+                    Vector3 dir = (target.transform.position - this.transform.position);
+                    bulletCloneRigid.velocity = dir * 30f;
                     bulletClone.SetActive(true);
                     Destroy(bulletClone, 2.0f);
                 }
@@ -69,6 +70,9 @@ public class SpottingSnakeAttack : MonoBehaviour
                 isDead = true;
                 animator.SetBool("Ded", true);
                 navMeshAgent.Stop();
+                if (isBoss) {
+                    playerScript.hasKilledBoss = true;
+                }
             }
         }
     }

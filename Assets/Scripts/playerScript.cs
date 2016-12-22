@@ -10,7 +10,7 @@ public class playerScript : MonoBehaviour
 
     // inventory items : heal, box, key
     // inventory weapons : knock, pistol
-
+    public static bool hasKilledBoss = false;
     
     bool isDead = false;
     public static bool isInBox = false;
@@ -61,7 +61,7 @@ public class playerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        hasKilledBoss = false;
         AudioSource[] audioSources = GetComponents<AudioSource>();
         gunShot = audioSources[0];
         ssHurt = audioSources[1];
@@ -207,6 +207,13 @@ public class playerScript : MonoBehaviour
             }
         }
 
+        if (collider.CompareTag("door") && hasKilledBoss)
+        {
+            //go to another scene
+            doorOpening.Play();
+            SceneManager.LoadScene("Credits");
+        }
+
         if (collider.CompareTag("door") && key)
         {
             //go to another scene
@@ -226,7 +233,7 @@ public class playerScript : MonoBehaviour
             collider.gameObject.SetActive(false);
         }
 
-        if (collider.CompareTag("doorCard"))
+        if (collider.CompareTag("DoorCard"))
         {
             key = true;
             collider.gameObject.SetActive(false);

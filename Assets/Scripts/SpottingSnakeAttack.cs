@@ -8,7 +8,7 @@ public class SpottingSnakeAttack : MonoBehaviour
     public GameObject bullet;
     float lastBulletWaitTime = 0f;
     public GameObject snake;
-    int health = 100;
+    int health = 50;
 
     Animator animator;
     NavMeshAgent navMeshAgent;
@@ -78,7 +78,7 @@ public class SpottingSnakeAttack : MonoBehaviour
 
         int visionField = 7;
         int veryCloseDistance = 1;
-        float viewingAngle = 110f;
+        float viewingAngle = 90f;
 
         RaycastHit hit;
         Vector3 rayDirection = snake.transform.position - transform.position;

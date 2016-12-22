@@ -5,12 +5,12 @@ public class guardPath : MonoBehaviour
 {
 
     private NavMeshAgent agent;
-	Animator anim;
+    Animator anim;
     public Transform destination1;
     public Transform destination2;
     bool hasReachedTarget1 = false;
-	public float animationSpeedMultiplier;
-	public float agentSpeed;
+    public float animationSpeedMultiplier;
+    public float agentSpeed;
 
     public static Transform destinationSnakeCurrentLocation;
 
@@ -18,19 +18,19 @@ public class guardPath : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-		anim = GetComponent<Animator> ();
+        anim = GetComponent<Animator>();
         agent.SetDestination(destination1.position);
-		agent.speed = agentSpeed;
+        agent.speed = agentSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-		anim.SetFloat ("Forward", agent.desiredVelocity.magnitude/animationSpeedMultiplier);
+        anim.SetFloat("Forward", agent.desiredVelocity.magnitude / animationSpeedMultiplier);
         if (destinationSnakeCurrentLocation != null)
         {
             agent.SetDestination(destinationSnakeCurrentLocation.position);
-            if (destinationSnakeCurrentLocation.position.x == this.transform.position.x && destinationSnakeCurrentLocation.position.z == this.transform.position.z)
+            if (Vector3.Distance(destinationSnakeCurrentLocation.position, transform.position) < 0.5f)
             {
                 Destroy(destinationSnakeCurrentLocation.gameObject);
                 destinationSnakeCurrentLocation = null;
@@ -41,7 +41,7 @@ public class guardPath : MonoBehaviour
             if (!hasReachedTarget1)
             {
                 agent.SetDestination(destination1.position);
-                if (destination1.position.x == this.transform.position.x && destination1.position.z == this.transform.position.z)
+                if (Vector3.Distance(destination1.position, transform.position) < 0.5f)
                 {
                     hasReachedTarget1 = true;
                 }
@@ -49,7 +49,7 @@ public class guardPath : MonoBehaviour
             else
             {
                 agent.SetDestination(destination2.position);
-                if (destination2.position.x == this.transform.position.x && destination2.position.z == this.transform.position.z)
+                if (Vector3.Distance(destination2.position, transform.position) < 0.5f)
                 {
                     hasReachedTarget1 = false;
                 }

@@ -9,17 +9,21 @@ public class playerScript : MonoBehaviour
     // inventory items : heal, box, key
     // inventory weapons : knock, pistol
 
+    bool isDead = false;
+    public static bool isInBox = false;
+
     string currentChosenItemFromInventory = "";
 
     int healItems = 0;
-    bool box = false;
+    bool box = true;
     bool key = false;
 
     bool knock = true;
-    int pistolAmmo = 0;
+    int pistolAmmo = 20;
 
     int health = 100;
 
+    ThirdPersonUserControl thirdPersonUserControl;
     ThirdPersonCharacter m_Character;
     GameObject aimDot;
 
@@ -28,13 +32,17 @@ public class playerScript : MonoBehaviour
     GameObject MainCameraPivot;
     Animator animator;
 
+    public GameObject boxGameObject;
+    public GameObject snakeGameObject;
     public GameObject bullet;
     public GameObject aimTarget;
     GameObject aimTargetClone;
+    float lastBulletWaitTime = 0f;
 
     // Use this for initialization
     void Start()
     {
+        thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
         animator = GetComponent<Animator>();
         m_Character = GetComponent<ThirdPersonCharacter>();
         aimDot = GameObject.FindWithTag("aimDot");
@@ -50,19 +58,17 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("Fire", false);
 
-        if (Input.GetMouseButton(0) && animator.GetBool("Aim"))
+        if (health <= 0)
+        {
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0) && animator.GetBool("Aim"))
         {
             //attack
             OnAttackClicked();
         }
-        /*
-        if (Input.GetMouseButtonUp(1) && animator.GetBool("Aim"))
-        {
-            transform.rotation = Quaternion.LookRotation(parentMainCamera.transform.forward);
-            MainCameraPivot.transform.position.Set(MainCameraPivot.transform.position.x, MainCameraPivot.transform.position.y, 0.0f);
-        }*/
 
         Destroy(aimTargetClone);
         if (Input.GetMouseButton(1) && animator.GetBool("Pistol"))
@@ -75,36 +81,37 @@ public class playerScript : MonoBehaviour
             RaycastHit raycastHit;
             ray.origin = bullet.transform.position;
             ray.direction = mainCamera.transform.forward;
-            if (Physics.SphereCast(ray, 0.009f, out raycastHit, Mathf.Infinity) && !raycastHit.transform.CompareTag("bullet"))
+            if (Physics.SphereCast(ray, 0.009f, out raycastHit, Mathf.Infinity) && !raycastHit.transform.CompareTag("snakeBullet"))
             {
                 aimTargetClone = (GameObject)Instantiate(aimTarget, raycastHit.point, aimTarget.transform.rotation);
             }
-
-            //MainCameraPivot.transform.position.Set(MainCameraPivot.transform.position.x, MainCameraPivot.transform.position.y, -0.6f);
-            //aimDot.SetActive(true);
         }
         else
         {
             animator.SetBool("Aim", false);
-            //aimDot.SetActive(false);
         }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             //open the item menu
         }
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             //open the weapons menu
         }
+
         if (Input.GetKeyDown(KeyCode.AltGr))
         {
             //activate / deactivate object
             OnAltClick();
         }
+
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             //pause the game
         }
+
     }
 
     void chooseItem(string item)
@@ -114,9 +121,15 @@ public class playerScript : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("bullet"))
+        if (collider.CompareTag("enemyBullet"))
         {
             health -= 20;
+            if (health <= 0 && !isDead)
+            {
+                isDead = true;
+                animator.SetBool("Ded", true);
+                thirdPersonUserControl.enabled = false;
+            }
         }
 
         if (collider.CompareTag("door"))
@@ -162,29 +175,21 @@ public class playerScript : MonoBehaviour
         }
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {
-            pistolAmmo--;
-            animator.SetBool("Fire", true);
-
-            /*
-            Ray ray = new Ray();
-            RaycastHit raycastHit;
-            ray.origin = transform.position;
-            ray.direction = mainCamera.transform.forward;
-            if (Physics.SphereCast(ray, 0.1f, out raycastHit, 5, 1 << 9))
+            if (Time.time - lastBulletWaitTime > 0.5)
             {
-                SpottingSnakeLose spottingSnakeLoseEnemy = raycastHit.transform.gameObject.GetComponent<SpottingSnakeLose>();
-                spottingSnakeLoseEnemy.health -= 20;
-            }*/
 
+                pistolAmmo--;
+                animator.SetBool("Fire", true);
 
-            GameObject bulletClone = (GameObject)Instantiate(bullet, bullet.transform.position, bullet.transform.rotation);
-            bulletClone.transform.localScale *= 300;
-            Rigidbody bulletCloneRigid = bulletClone.GetComponent<Rigidbody>();
-            bulletCloneRigid.isKinematic = false;
-            bulletCloneRigid.velocity = mainCamera.transform.forward * 50f;
-            bulletClone.SetActive(true);
+                GameObject bulletClone = (GameObject)Instantiate(bullet, bullet.transform.position, bullet.transform.rotation);
+                bulletClone.transform.localScale *= 300;
+                Rigidbody bulletCloneRigid = bulletClone.GetComponent<Rigidbody>();
+                bulletCloneRigid.isKinematic = false;
+                bulletCloneRigid.velocity = mainCamera.transform.forward * 200f;
+                bulletClone.SetActive(true);
 
-            Destroy(bulletClone, 2.0f);
+                Destroy(bulletClone, 2.0f);
+            }
         }
     }
 
@@ -199,13 +204,19 @@ public class playerScript : MonoBehaviour
         else if (currentChosenItemFromInventory.Equals("box") && box)
         {
             //show box hide character / hide box show character
-            if (animator.GetBool("inBox"))
+            if (isInBox)
             {
-                animator.SetBool("inBox", false);
+                isInBox = false;
+                boxGameObject.SetActive(false);
+                snakeGameObject.SetActive(true);
+                thirdPersonUserControl.enabled = true;
             }
             else
             {
-                animator.SetBool("inBox", true);
+                isInBox = true;
+                boxGameObject.SetActive(true);
+                snakeGameObject.SetActive(false);
+                thirdPersonUserControl.enabled = false;
             }
         }
 

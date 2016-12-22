@@ -13,6 +13,7 @@ public class ButtonManager : MonoBehaviour
     public GameObject exitGameButton;
     public GameObject LevelOne;
     public GameObject LevelTwo;
+    public AudioSource openMenuSound;
 
     private bool startMoving = false;
     private bool optionsMoving = false;
@@ -157,6 +158,7 @@ public class ButtonManager : MonoBehaviour
     public void loadScene(string selectScene)
     {
         startMoving = true;
+        openMenuSound.Play();
     }
 
    

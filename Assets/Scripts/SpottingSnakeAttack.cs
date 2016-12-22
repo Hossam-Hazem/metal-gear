@@ -17,6 +17,7 @@ public class SpottingSnakeAttack : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        animator.SetBool("Rifle", true);
     }
 
     void Update()

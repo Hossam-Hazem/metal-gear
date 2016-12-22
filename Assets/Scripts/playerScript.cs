@@ -52,7 +52,7 @@ public class playerScript : MonoBehaviour
         MainCameraPivot = GameObject.FindWithTag("MainCameraPivot");
 
 
-        currentChosenItemFromInventory = "pistol";
+        currentChosenItemFromInventory = "knock";
     }
 
     // Update is called once per frame
@@ -234,6 +234,8 @@ public class playerScript : MonoBehaviour
                 Destroy(guardPath.destinationSnakeCurrentLocation.gameObject);
             }
             guardPath.destinationSnakeCurrentLocation = currentLocation.transform;
+
+            animator.SetBool("knock", true);
         }
         else if (currentChosenItemFromInventory.Equals("pistol"))
         {

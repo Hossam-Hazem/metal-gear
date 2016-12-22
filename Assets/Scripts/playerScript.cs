@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class playerScript : MonoBehaviour
     GameObject MainCameraPivot;
     Animator animator;
 
+    public Button healB;
+    public Button boxB;
+    public Button keyB;
+    public Button knockB;
+    public Button pistolB;
+
+    public GameObject inventoryCanvas;
     public GameObject boxGameObject;
     public GameObject snakeGameObject;
     public GameObject bullet;
@@ -51,6 +59,28 @@ public class playerScript : MonoBehaviour
         mainCamera = GameObject.FindWithTag("MainCamera");
         MainCameraPivot = GameObject.FindWithTag("MainCameraPivot");
 
+        // inventory items : heal, box, key
+    // inventory weapons : knock, pistol
+        healB.onClick.AddListener(() => { 
+            chooseItem("health");
+            inventoryCanvas.SetActive(false);
+        });
+        boxB.onClick.AddListener(() => { 
+            chooseItem("box");
+            inventoryCanvas.SetActive(false);
+        });
+        keyB.onClick.AddListener(() => { 
+            chooseItem("key");
+            inventoryCanvas.SetActive(false);
+        });
+        knockB.onClick.AddListener(() => { 
+            chooseItem("knock");
+            inventoryCanvas.SetActive(false);
+        });
+        pistolB.onClick.AddListener(() => { 
+            chooseItem("pistol");
+            inventoryCanvas.SetActive(false);
+        });
 
         currentChosenItemFromInventory = "knock";
     }
@@ -93,12 +123,20 @@ public class playerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //open the item menu
+            if (!inventoryCanvas.activeSelf) {
+                //open the item menu
+                inventoryCanvas.SetActive(true);
+            }
+            else
+            {
+                inventoryCanvas.SetActive(false);
+            }   
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             //open the weapons menu
+
         }
 
         if (Input.GetKeyDown(KeyCode.AltGr))

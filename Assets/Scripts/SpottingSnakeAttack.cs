@@ -8,7 +8,7 @@ public class SpottingSnakeAttack : MonoBehaviour
     public GameObject bullet;
     float lastBulletWaitTime = 0f;
     public GameObject snake;
-    int health = 50;
+    public int health = 50;
 
     Animator animator;
     NavMeshAgent navMeshAgent;

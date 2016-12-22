@@ -46,6 +46,7 @@ public class ButtonManager : MonoBehaviour
     }
     void Update()
     {
+
         if (startMoving)
         {
             speed += 0.4f;
@@ -170,7 +171,7 @@ public class ButtonManager : MonoBehaviour
 
     public void closeWeaponsPanel()
     {
-        weaponsPanel.SetActive(false);
+        weaponsPanel.SetActive(true);
     }
 
     public void pauseMenu()

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpottingSnakeAttack : MonoBehaviour
 {
-
+/*
     bool isDead = false;
     public GameObject bullet;
     float lastBulletWaitTime = 0f;
@@ -102,5 +102,5 @@ public class SpottingSnakeAttack : MonoBehaviour
             return false;
         }
     }
-
+    */
 }

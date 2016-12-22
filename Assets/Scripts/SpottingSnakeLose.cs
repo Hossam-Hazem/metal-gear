@@ -48,14 +48,14 @@ public class SpottingSnakeLose : MonoBehaviour
         RaycastHit hit;
         Vector3 rayDirection = snake.transform.position - transform.position;
 
-        if (playerScript.isInBox && Physics.Raycast(transform.position, rayDirection, out hit) &&
+        if (!playerScript.isInBox && Physics.Raycast(transform.position, rayDirection, out hit) &&
             (hit.transform.gameObject.layer == LayerMask.NameToLayer("snake")) &&
             (hit.distance < veryCloseDistance))
         {
             return true;
         }
 
-        if (playerScript.isInBox && (Vector3.Angle(rayDirection, transform.forward)) < ((viewingAngle / 2)) &&
+        if (!playerScript.isInBox && (Vector3.Angle(rayDirection, transform.forward)) < ((viewingAngle / 2)) &&
             Physics.Raycast(transform.position, rayDirection, out hit) &&
             hit.transform.gameObject.layer == LayerMask.NameToLayer("snake") &&
             (hit.distance < visionField))

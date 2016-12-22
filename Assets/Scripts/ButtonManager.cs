@@ -158,7 +158,10 @@ public class ButtonManager : MonoBehaviour
     {
         Application.Quit();
     }
-
+    public void creditsButton()
+    {
+        SceneManager.LoadScene("Credits");
+    }
     public void weaponsMenu()
     {
         // TODO
